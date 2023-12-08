@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node_version: 18.x
+          node-version: 18.x
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -31,6 +31,21 @@ jobs:
         run: vercel --prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Tests
         run: npm run test -- --no-watch --code-coverage
